@@ -10,17 +10,25 @@ import CreateProject from "./Components/Container/CreateProject";
 
 function App() {
 
+  const [clients, setClients] = useState([])
 
+  useEffect(() => {
+    fetch ('http://localhost:9292/clients')
+    .then (resp => resp.json())
+    .then (project => {
+        setClients(project)
+    })
+}, [])
 
   return (
     <div className="App">
       <Router>
         <NavBar />
         <Routes>
-          <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/" element={<Home setClients={setClients} clients={clients}/>}></Route>
           <Route path="/projects" element={<ProjectList />}></Route>
           <Route path="/create-task" element={<CreateTask />}></Route>
-          <Route path="/create-project" element={<CreateProject />}></Route>
+          <Route path="/create-project" element={<CreateProject clients={clients}/>}></Route>
         </Routes>
       </Router>
     </div>
