@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const NavBar = () => {
+
+
   return (
     <div>
-        <h1>NavBar</h1>
+
     </div>
   )
 }

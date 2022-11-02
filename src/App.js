@@ -1,30 +1,28 @@
-import React from "React";
-import {useEffect, useState} from "React"
+import React from "react";
+import {useEffect, useState} from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
+import NavBar from "./Components/NavBar";
+import Home from "./Components/Home"
+import ProjectList from "./Components/Projects/ProjectList";
+import CreateTask from "./Components/Container/CreateTask";
+import CreateProject from "./Components/Container/CreateProject";
 
 function App() {
 
-useEffect(() => {
-  fetch 
-})
 
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route path="/projects" element={<ProjectList />}></Route>
+          <Route path="/create-task" element={<CreateTask />}></Route>
+          <Route path="/create-project" element={<CreateProject />}></Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
