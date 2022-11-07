@@ -1,0 +1,41 @@
+.project-container{
+    border: 1px solid black;
+    border-radius: 30px;
+    margin: 20px;
+    width: 500px;
+    background: #0c4d78;
+    color: white;
+}
+
+.task-container{
+    border: 1px solid black;
+    border-radius: 30px;
+    width: 250px;
+    background: rgb(239, 199, 164);
+    justify-content: center;
+    margin: 40px;
+}
+
+.edit-container{
+    display:block;
+    margin: 20px;
+    justify-content: center;
+    text-align: center;
+}
+
+.edit-list{
+   text-decoration: none;
+   list-style: none;
+}
+
+.project-name{
+    margin: 10px;
+}
+
+.project-client{
+    margin: 10px;
+}
+
+.project-frame{
+    margin: 10px;
+}

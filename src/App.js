@@ -5,8 +5,9 @@ import './App.css';
 import NavBar from "./Components/NavBar";
 import Home from "./Components/Home"
 import ProjectList from "./Components/Projects/ProjectList";
-import CreateTask from "./Components/Container/CreateTask";
-import CreateProject from "./Components/Container/CreateProject";
+import CreateTask from "./Components/Create/CreateTask";
+import CreateProject from "./Components/Create/CreateProject";
+import CreateClient from "./Components/Create/CreateClient";
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
     })
 }, [])
 
+
+
   return (
     <div className="App">
       <Router>
@@ -29,6 +32,7 @@ function App() {
           <Route path="/projects" element={<ProjectList />}></Route>
           <Route path="/create-task" element={<CreateTask />}></Route>
           <Route path="/create-project" element={<CreateProject clients={clients}/>}></Route>
+          <Route path="/create-client" element={<CreateClient />}></Route>
         </Routes>
       </Router>
     </div>
