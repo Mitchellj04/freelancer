@@ -1,3 +1,4 @@
+import { Button, FormGroup, TextField } from '@mui/material'
 import React from 'react'
 import {useState} from 'react'
 
@@ -20,34 +21,37 @@ const CreateClient = () => {
         })
     }
 
-    const handleChange = (e) => {
-        setCreateClient({...createClient, [e.target.name]: e.target.value})
-    }
+    const handleChange = (e) => {setCreateClient({...createClient, [e.target.name]: e.target.value})}
 
   return (
     <div>
-        <form>
-            <input 
+        <FormGroup style={{margin: 20, width: 250}}>
+            <TextField 
+                style={{margin: 10, width: "100%"}} 
+                variant='filled'
                 placeholder='Compnay name ....'
-                type={"text"}
                 name={"name"}
                 value={createClient.name}
-                onChange={handleChange}/>
-            <input 
-                placeholder='Manager name...'
-                type={""}
+                onChange={handleChange}>
+            </TextField>
+            <TextField 
+                style={{margin: 10, width: "100%"}}
+                variant='filled'
+                placeholder='Manager name ....'
                 name={"manager"}
                 value={createClient.manager}
-                onChange={handleChange}/>
-            <input 
-                placeholder='contact info'
-                type={"text"}
+                onChange={handleChange}>
+            </TextField>
+            <TextField 
+                style={{margin: 10, width: "100%"}}
+                variant='filled'
+                placeholder='contact info ....'
                 name={"contact"}
                 value={createClient.contact}
-                onChange={handleChange}/>
-            
-            <button onClick={handleSubmit}>Create</button>
-        </form>
+                onChange={handleChange}>
+            </TextField>        
+            <Button onClick={handleSubmit}>Create</Button>
+        </FormGroup>
 
 
     </div>

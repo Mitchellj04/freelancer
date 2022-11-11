@@ -4,18 +4,26 @@ import ProjectEdit from '../Edit/ProjectEdit';
 import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import TaskEdit from '../Edit/TaskEdit';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Accordion, AccordionActions, AccordionSummary, Typography, AccordionDetails} from '@mui/material';
+import { Container } from '@mui/system';
+import TaskList from '../lists/TaskList';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const ProjectContainer = ({list, deleteItem, deleteTasks}) => {
-    
+const ProjectContainer = ({
+    list, 
+    projects,
+    setProjects,
+    handleDelete
+     }) => {
+
+    // console.log(list)
+    const navigate = useNavigate()
     const [hideEdit, setHideEdit] = useState(false)
-    const [hideTask, setHideTask] = useState(true)
-    const [hideEditTask, setHideEditTask] = useState(true)
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -24,131 +32,73 @@ const ProjectContainer = ({list, deleteItem, deleteTasks}) => {
         textAlign: 'center',
         color: theme.palette.text.secondary,
       }));
-    
 
-    const handleDelete = (e) => {
-        fetch(`http://localhost:9292/projects/${list.id}`, {
-            method: "DELETE"
-        })
-        .then((resp) => resp.json)
-        .then((destroy) => deleteItem(destroy) )
-            
-    }
+    const handleClickOpen = () => {setHideEdit(true);};
+    const handleClose = () => {setHideEdit(false);};
 
-    const handleClickOpen = () => {
-        setHideEdit(true);
-      };
-    
-      const handleClose = () => {
-        setHideEdit(false);
-      };
 
-    const handleTaskOpen = () => {
-        setHideEditTask(true)
-    }
-
-    const handleTaskClose = () => {
-        setHideEditTask(false)
-    }
-
-    const handleHide = () => {
-        setHideEdit((hideEdit) => !hideEdit)
-    }
-
-    const handleHideTask = () => {
-        setHideTask((hideTask) => !hideTask)
-    }
-
-    const handleTaskEdit = () => {
-        setHideEditTask((hideEditTask) => !hideEditTask)
-    }
-
-    const handleTaskDelete = () => {
-        fetch(`http://localhost:9292/tasks/${list.id}`, {
-            method: "DELETE"
-        })
-        .then((resp) => resp.json)
-        .then((destroy) => deleteTasks(destroy))
-    }
-
-    function taskDiv(){
-        if(list.task_id === list.task.id){
-            return (
-            <div className='task-container'>
-                <h4>Task:</h4>
-                <p>Description: {list.task.description}</p>
-                <p>Time: {list.task.hours}</p>
-                <p>pay: ${list.task.pay}</p>
-                <p>Due Date: {list.task.due_date}</p>
-                <Button onClick={handleTaskDelete} startIcon={<DeleteIcon/>} color="secondary"></Button>
-                <Button className='task-button-edit' onClick={handleTaskOpen}  startIcon={<EditIcon/>}></Button>
-                <Dialog
-                    open={hideEditTask}
-                    keepMounted
-                    onClose={handleTaskClose}>
-                    <DialogTitle>Edit Project</DialogTitle>
-                    <DialogContent><TaskEdit /></DialogContent>
-                    <DialogActions>
-                    <Button onClick={handleTaskClose}>Close</Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-        )}
-        else if (list.id.task === undefined){
-            list.task.id = null
-        }
-    }
-
-    function hideTaskDiv(){
-        if(hideTask === false){
-            return taskDiv()
-        }
-        else{
-            return 
-        }
-    }
-
-    console.log(hideTask)
 
   return (
+    
     <Box>
-        <Grid container spacing={4}>
-            <Grid xs={9} sm={12}>
-                <Item>
-                <div className={"project-container"}>
-                
-                    <h1>Project: {list.name}</h1>
-                    <h3>Client: {list.client.name}</h3>
-                    <p>Project Timeframe: {list.timeframe} months</p>     
-                    <Button 
-                        size="small" 
-                        variant="contained" 
-                        startIcon={<EditIcon/>} 
-                        className="create-button"
-                        onClick={handleClickOpen}></Button> 
-                    <Button 
-                        size="small" 
-                        variant="contained" 
-                        startIcon={<DeleteIcon />}  
-                        color="secondary" 
-                        onClick={handleDelete}></Button>
-                        <Dialog
-                            open={hideEdit}
-                            keepMounted
-                            onClose={handleClose}>
-                            <DialogTitle>Edit Project</DialogTitle>
-                            <DialogContent><ProjectEdit/></DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleClose}>Close</Button>
-                            </DialogActions>
-                        </Dialog>
-                    <h3>To Complete: <button onClick={handleHideTask}>...</button></h3>
-                    {hideTaskDiv()}
-                </div>
-                </Item>
-                </Grid>
-        </Grid>
-    </Box>
+        <Grid container        
+                direction="row"
+                justify="center"
+                alignItems="stretch" 
+                style={{margin: 10, boxShadow:" 5px 5px 5px 5px pink"}}>
+            <Box style={{margin: 10, boxShadow:" 5px 5px 5px 5px red"}}>
+                <Grid item xs={12}>
+                    <Item>
+                        <div className={"project-container"}>
+                            <h1>Project: {list.name}</h1>
+                            {/* <h3>Client: {list.client.name}</h3> */}
+                            <p>Project Timeframe: {list.timeframe} months</p> 
+                            <p>category: {list.category}</p>    
+                            <Button 
+                                size="small" 
+                                variant="contained" 
+                                startIcon={<EditIcon/>} 
+                                className="create-button"
+                                onClick={handleClickOpen}></Button> 
+                            <Button 
+                                size="small" 
+                                variant="contained" 
+                                startIcon={<DeleteIcon />}  
+                                value="projects"
+                                color="secondary" 
+                                onClick={() => handleDelete(list)}></Button>
+                            <Dialog
+                                open={hideEdit}
+                                keepMounted
+                                onClose={handleClose}>
+                                <DialogTitle>Edit Project</DialogTitle>
+                                <DialogContent><ProjectEdit list={list} projects={projects} setProjects={setProjects}/></DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleClose}>Close</Button>
+                                </DialogActions>
+                            </Dialog>
+
+                            <Accordion className="Accordion-side" style={{width: "100%", color: "#1976D2"}}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header">
+                                    <Typography>Task List</Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <div>
+                                        <TaskList list={list} setList={setProjects}/>
+                                    </div>
+                                </AccordionDetails>
+                            </Accordion>
+                                
+                            </div>
+                        </Item> 
+                    </Grid>
+                </Box>
+             </Grid>
+       </Box>
+   
   )
 }
 

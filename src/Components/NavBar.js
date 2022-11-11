@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import  { React, useEffect, useState } from 'react'
 import './CSS/NavBar.css'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 
 const NavBar = () => {
-
-
-
+  
   return (
+    
     <div className='navbar'>
-      <div className='navcenter'>
-        <ul className='navlist'>
-          <h1 className='list-item'>Freelancer</h1>
-          <li className='list-item'><Link className="link" to="/">Home</Link></li>
-          <li className='list-item'><Link className="link" to="/create-project">Create Project</Link></li>
-        </ul> 
-     </div>
-
+      <AppBar style={{textAlign: "center", alignItems: "center"}}>
+        <Toolbar>
+        <Typography variant='h4'>Freelancer</Typography>
+        </Toolbar>
+      </AppBar>
     </div>
+   
   )
 }
 

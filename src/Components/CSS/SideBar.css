@@ -1,20 +1,19 @@
 .sidebar{
-    position: fixed;
-    left:0;
     width: 250px;
     height: 100%;
-    background: #042331;
-}
+    border-right: 1px solid;
+    border-color: #1976D2;
+    box-shadow: 5px 5px 5px rgb(168, 168, 168);
+  }
 
-.sidebar header {
+  .sidebar header {
     font-size: 40px;
-    color: white;
+    color:#1976D2;
     text-align: center;
-    background: #084663;
-
-}
-
-.container-sidebar{
+  
+  }
+  
+  .container-sidebar{
     display: block;
     height: 100%;
     width: 100%;
@@ -22,16 +21,15 @@
     color: rgb(255, 255, 255);
     box-sizing: border-box;
     
-}
+  }
 
-.client-container{
+  .client-container{
     padding-bottom: 20px;
     border-top: 1px solid rgba(255, 255,  255, .1);
     border-bottom: 1px solid black;
-}
+  }
 
-
-.item-sidebar{
+  .item-sidebar{
     margin-right: 20px;
     font-size: 20px;
     cursor: pointer;
@@ -43,10 +41,5 @@
     text-align: center;
     position: center;
     margin-left: 50px;
-}
-
-.create-button{
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-}
+  }
+  

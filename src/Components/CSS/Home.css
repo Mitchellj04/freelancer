@@ -1,6 +1,45 @@
 
-.project-popup-button{
-    position: absolute;
-    size: large;
-    margin-right: 10px;
-}
+  .container-sidebar{
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding-top: 20px;
+    color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    
+  }
+  
+  .client-container{
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(255, 255,  255, .1);
+    border-bottom: 1px solid black;
+  }
+  
+  
+  .item-sidebar{
+    margin-right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #042331;
+    border: 1px solid;
+    width: 125px;
+    background: white;
+    justify-content: center;
+    text-align: center;
+    position: center;
+    margin-left: 50px;
+  }
+  
+  .create-button{
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .Accordion-side{
+    color:white;
+  }
+
+  .dialog-container{
+    width: 500px;
+  }
