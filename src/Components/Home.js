@@ -13,7 +13,7 @@ const Home = ({
   clients, 
   setClients, 
   projects, 
-  setProjects,
+  setProjects
   }) => {
 
   const [openProject, setOpenProject] = useState(false);
@@ -47,21 +47,20 @@ const Home = ({
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(create)
-      }).then((response) => {
-          console.log(response)
-      })
-
+      }).then((resp) => resp.json())
+        .then ((setList) => setProjects([...projects, setList]))
+        
     handleClose()
   }
 
-
+  console.log(projects)
   return (
    
-      
+      // style={{boxShadow:" 5px 5px 5px 5px yellow"}}
   
-    <Grid container spacing={2} style={{boxShadow:" 5px 5px 5px 5px yellow"}}> 
+    <Grid container spacing={2} > 
         <Grid item xs={3}>
-          <SideBar clients={clients} setClients={setClients}/>
+          <SideBar clients={clients} setClients={setClients} projects={projects} setProjects={setProjects}/>
         </Grid>
         <Grid item xs={9}>
           <div className='dialog-container'>
@@ -72,7 +71,7 @@ const Home = ({
                 onClose={handleClose}
                 >
               <DialogTitle>Create Project</DialogTitle>
-              <DialogContent><CreateProject handleClose={handleClose} handleCreateProject={handleCreateProject}/></DialogContent>
+              <DialogContent><CreateProject handleClose={handleClose} handleCreateProject={handleCreateProject} projects={projects} setProjects={setProjects}/></DialogContent>
               <DialogActions>
                 {/* <Button onClick={handleClose}>Cancel</Button> */}
               </DialogActions>
@@ -84,7 +83,7 @@ const Home = ({
                 onClose={handleClose}
                 >
               <DialogTitle>Create Task</DialogTitle>
-              <DialogContent><CreateTask projects={projects} handleClose={handleClose}/></DialogContent>
+              <DialogContent><CreateTask projects={projects} setProjects={setProjects} handleClose={handleClose}/></DialogContent>
               <DialogActions>
                 {/* <Button onClick={handleClose}>Cancel</Button> */}
               </DialogActions>

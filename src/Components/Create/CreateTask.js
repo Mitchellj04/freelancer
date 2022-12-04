@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { Box, FormGroup, TextField, FormControlLabel, Button, FormControl, InputLabel, Select, MenuItem, Checkbox } from '@mui/material'
 
 
-const CreateTask = ({projects,
+const CreateTask = ({projects, setProjects,
   handleClose,
 }) => {
 
-  console.log(projects)
+  // console.log(projects)
   const [loading, setLoading] = useState()
   const [createTask, setCreateTask] = useState({
     description : "",
@@ -17,12 +17,14 @@ const CreateTask = ({projects,
     project_id: "",
     client_id: ""
   })   
+
+  // console.log(projects)
   
   function clientIdFinder(integer){
-        let clientFinder = projects.find((list) => list.id === integer)
-        console.log(clientFinder.client_id)
-        let clientId = clientFinder.client_id
-        setCreateTask({...createTask, client_id: clientId})
+        let projectFinder = projects.find((list) => list.id === integer)
+        console.log(projectFinder.tasks)
+        let projectId = projectFinder.id
+        setCreateTask({...createTask, project_id: projectId})
   }
   
   const handleChange = (e) => {setCreateTask( {...createTask, [e.target.name]: e.target.value})}
@@ -33,34 +35,47 @@ const CreateTask = ({projects,
         clientIdFinder(integer)
       }
 
+  
   const projectList = projects.map((project) => {
+    let taskId = project.id
     return <FormControlLabel 
               key={project.id} 
               label={project.name}
               control={
                 <Checkbox 
                   key={project.id} 
-                  id={project.id} 
+                  id={taskId.toString()} 
                   name={"project_id"} 
                   value={createTask.project_id} 
                   onChange={handleSelect}/>} >
             </FormControlLabel>
   })
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // history.push("/")
+  const handleTaskCreate = (create) => {
+    
     fetch('http://localhost:9292/tasks',{
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(createTask)
-        }).then((response) => {
-            console.log(response)
-        })
+            body: JSON.stringify(create)
+        }).then((resp) => resp.json())
+          .then((setList) => console.log(setList))
         setLoading("Loading new task")
         handleClose()
-        console.log(createTask)
   }
+
+  const taskCreator = (newTask) => {
+    handleTaskCreate(newTask)
+
+    const updatedTasks = projects.map((project) => 
+      project.task.id === newTask.id ? newTask : project
+    )
+
+    setProjects(updatedTasks)
+  }
+  
+  const handleSubmit = () => {
+  taskCreator(createTask)  
+}
 
   
   return (

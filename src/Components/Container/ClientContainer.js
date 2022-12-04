@@ -2,9 +2,14 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { Button, List } from '@mui/material'
 import React from 'react'
 
-const ClientContainer = ({list, handleDelete}) => {
+const ClientContainer = ({list, handleDelete, tasksLength}) => {
 
-    let tasksLength = list.tasks.length 
+    // 
+    // console.log(list)
+
+    // function clients() {
+    //   if (list)
+    // }
 
   return (
     <div className='client-container'>

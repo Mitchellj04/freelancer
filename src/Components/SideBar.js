@@ -8,7 +8,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ClientList from './lists/ClientList'
 
-const SideBar = ({setClients, clients}) => {
+const SideBar = ({clients, projects, setProjects}) => {
 
     const [open, setOpen] = useState(false);
     const [hideClient, setHideClient] = useState(true)
@@ -18,17 +18,18 @@ const SideBar = ({setClients, clients}) => {
     const handleClose = () => {setOpen(false);};
     const handleHide = () => {setHideClient((hideClient) => !hideClient)}
   
-    const clientList = clients.map((list) => {
-        let tasksLenght = list.tasks.length
-        return (
-            <div key={list.id} className="client-container">
-                <h3>{list.name}</h3>
-                <p>{list.manager}</p>
-                <p>{list.contact}</p>
-                <p>To Do: {tasksLenght}</p>
-            </div>
-        )
-    })   
+    // const clientList = clients.map((list) => {
+    //     let tasksLenght = list.tasks.length
+    //     return (
+    //         <div key={list.id} className="client-container">
+    //             <h3>{list.name}</h3>
+    //             <p>{list.manager}</p>
+    //             <p>{list.contact}</p>
+    //             <p>To Do: {tasksLenght}</p>
+    //         </div>
+    //     )
+    // })   
+    const clientMapper = projects.map((list) => <ClientList list={list} key={list.id}/>)
 
   return (
     <Box>
@@ -60,7 +61,8 @@ const SideBar = ({setClients, clients}) => {
                         <Typography>Client List</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <ClientList clients={clients} setClients={setClients}/>
+                        {clientMapper}
+                        {/* <ClientList projects={projects} setProjects={setProjects}/> */}
                     </AccordionDetails>
                 </Accordion>
             </div>

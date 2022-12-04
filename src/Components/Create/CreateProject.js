@@ -3,26 +3,21 @@ import { useNavigate } from 'react-router-dom'
 import {Button, TextField, Box, FormGroup} from '@mui/material'
 
 
-const CreateProject = ({handleCreateProject}) => {
+const CreateProject = ({handleCreateProject, projects, setProjects}) => {
 
   // console.log(clients)
   const navigate = useNavigate()
   const [createProject, setCreateProject] = useState({
     name: "",
     timeframe: "",
-    category: "",
+    category: ""
   })
 
-  const handleCloseSubmit = () => {
-
-  }
-
   const handleChange = (e) => {setCreateProject( {...createProject, [e.target.name]: e.target.value})}
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    handleCreateProject(createProject)}
-
+    
+    const handleSubmit = (e) => {
+      handleCreateProject(createProject)
+  }
     return (
       <Box>
         <div>

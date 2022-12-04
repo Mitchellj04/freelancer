@@ -28,22 +28,22 @@ function App() {
     getProjects()
   }, [])
 
-  const getProjects =() => {
+  const getProjects = () => {
     fetch ('http://localhost:9292/projects')
     .then (resp => resp.json())
     .then (project => {
         setProjects(project)
+        console.log(project)
     })
   }
 
-// console.log(projects)
 
   return (
     <div className="App">
       <Router>
         <NavBar />
         <Routes>
-          <Route exact path="/" element={<Home setClients={setClients} clients={clients} projects={projects} setProjects={setProjects} />}></Route>
+          <Route exact path="/" element={<Home setClients={setClients} clients={clients} projects={projects} setProjects={setProjects}/>}></Route>
           <Route path="/projects" element={<ProjectList projects={projects}/>}></Route>
           <Route path="/create-task" element={<CreateTask projects={projects}/>}></Route>
           <Route path="/create-project" element={<CreateProject clients={clients}/>}></Route>

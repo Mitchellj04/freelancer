@@ -6,35 +6,29 @@ import { useState } from 'react'
 import TaskEdit from '../Edit/TaskEdit'
 
 const TaskContainer = ({
-  listTasks, 
   handleTaskDelete, 
-  list}) => {
+  task, 
+  setNewTask,
+  newTask
+  }) => {
+
 
   const [hideEditTask, setHideEditTask] = useState(false)
 
   const handleTaskOpen = () => {setHideEditTask(true)}
   const handleTaskClose = () => {setHideEditTask(false)}
-
-  function taskFilter(){
-    if(listTasks.project.id === list.id){
-      return  <div>
-      <h4>Task: {listTasks.description}</h4>
-      <p>Time: {listTasks.hours}</p>
-      <p>pay: ${listTasks.pay}</p>
-      <p>Due Date: {listTasks.due_date}</p>
-              
-      <Button value="tasks" onClick={() => handleTaskDelete(listTasks)} startIcon={<DeleteIcon/>} color="secondary" ></Button>
-      <Button className='task-button-edit' onClick={handleTaskOpen}  startIcon={<EditIcon/>}></Button>
-  </div>
-    }
-    else{
-      // console.log("cannot post this task")
-    }
-  }
   
   return (
     <div>
-      { taskFilter()}
+        <div>
+          <h4>Task: {task.description}</h4>
+          <p>Time: {task.hours}</p>
+          <p>pay: ${task.pay}</p>
+          <p>Due Date: {task.due_date}</p>
+                      
+          <Button value="tasks" onClick={() => handleTaskDelete(task)} startIcon={<DeleteIcon/>} color="secondary" ></Button>
+          <Button className='task-button-edit' onClick={handleTaskOpen}  startIcon={<EditIcon/>}></Button>
+        </div>
       <Dialog
         open={hideEditTask}
         keepMounted
@@ -43,7 +37,7 @@ const TaskContainer = ({
           <DialogTitle>Edit Task</DialogTitle>
 
           <DialogContent>
-            <TaskEdit listTasks={listTasks}/>
+            <TaskEdit task={task} setNewTask={setNewTask} newTask={newTask}/>
           </DialogContent>
           
           <DialogActions>

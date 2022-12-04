@@ -69,6 +69,6 @@ Dropdown menu will show current tasks for that project
 -Ruby 
 
 ## Links 
-(github)
-(youtube)
-(medium)
+[GitHub](https://github.com/Mitchellj04/freelancer)
+[Youtube](https://youtu.be/BR6lj0Mw_7Q)
+[Medium/Blog](https://medium.com/@mitchelljm04/power-of-sql-988576bc8a92)

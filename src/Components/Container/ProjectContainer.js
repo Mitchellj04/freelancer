@@ -11,8 +11,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Accordion, AccordionActions, AccordionSummary, Typography, AccordionDetails} from '@mui/material';
 import { Container } from '@mui/system';
-import TaskList from '../lists/TaskList';
 import { Navigate, useNavigate } from 'react-router-dom';
+import TaskContainer from './TaskContainer';
 
 const ProjectContainer = ({
     list, 
@@ -21,21 +21,60 @@ const ProjectContainer = ({
     handleDelete
      }) => {
 
-    // console.log(list)
     const navigate = useNavigate()
     const [hideEdit, setHideEdit] = useState(false)
+    const [newTask, setNewTask] = useState(list.tasks)
 
+    // console.log(newTask)
+
+    // STYLER 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
         padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-      }));
+      }));    
+      
+      //TASK DELETE 
+      const handleTaskDelete = (task) => {
+            fetch(`http://localhost:9292/tasks/${task.id}`, {
+                method: "DELETE"
+            })
+            .then((resp) => resp.json)
+            deleteTasks(task)
+          }
+           const deleteTasks = (task) => {
+            setNewTask(newTask.filter((list) => list.id !== task.id))
+          }
 
+    //OPEN DIALOG 
     const handleClickOpen = () => {setHideEdit(true);};
     const handleClose = () => {setHideEdit(false);};
+    
+    // MAP TASKS TO EACH PROJECT 
+    function mapped() {
+        const mapper = newTask.map((task) => <TaskContainer task={task} setNewTask={setNewTask} newTask={newTask} key={task.id} handleTaskDelete={handleTaskDelete}/>)
+        if(newTask.legnth > 0){
+            console.log("Length is longer than 0")
+           return {mapper}
+        }
+        else{
+            console.log(newTask.length)
+            return <p>Please add some tasks to complete</p>
+        }
+    }
 
+    function taskLength(){
+        if(newTask.length > 0){
+            return  newTask.map((task) => <TaskContainer task={task} setNewTask={setNewTask} newTask={newTask} key={task.id} handleTaskDelete={handleTaskDelete}/>)
+        }
+        else{
+            return <p>Please add some tasks to complete.</p>
+        }
+    }
+    
+    // const mapper = newTask.map((task) => <TaskContainer task={task} setNewTask={setNewTask} newTask={newTask} key={task.id} handleTaskDelete={handleTaskDelete}/>)
 
 
   return (
@@ -45,8 +84,10 @@ const ProjectContainer = ({
                 direction="row"
                 justify="center"
                 alignItems="stretch" 
-                style={{margin: 10, boxShadow:" 5px 5px 5px 5px pink"}}>
-            <Box style={{margin: 10, boxShadow:" 5px 5px 5px 5px red"}}>
+                //style={{margin: 10, boxShadow:" 5px 5px 5px 5px pink"}}
+                >
+            <Box style={{width: 650, margin: 10, boxShadow:" 5px 5px 5px 5px grey"}}
+            >
                 <Grid item xs={12}>
                     <Item>
                         <div className={"project-container"}>
@@ -87,7 +128,7 @@ const ProjectContainer = ({
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <div>
-                                        <TaskList list={list} setList={setProjects}/>
+                                        {taskLength()}
                                     </div>
                                 </AccordionDetails>
                             </Accordion>

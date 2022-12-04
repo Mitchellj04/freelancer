@@ -28,10 +28,9 @@ const ProjectList = ({projects, setProjects}) => {
   const projectList = projects.map((list) => <ProjectContainer list={list} key={list.id} projects={projects} setProjects={setProjects} handleDelete={handleDelete}/> )
 
   return (
-
-          <>
-            {projectList}
-          </>   
+    <>
+      {projectList}
+    </>   
 
   )
 }
